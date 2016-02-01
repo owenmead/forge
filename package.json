@@ -1,0 +1,10 @@
+{
+  "name": "forge",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Owen Mead-Robins <owenmead@gmail.com> (http://www.owenmead.com)",
+  "license": "UNLICENSED"
+}
