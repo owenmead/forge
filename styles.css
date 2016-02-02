@@ -1,0 +1,16 @@
+/* == Base ==== */
+body {
+	font-family: Roboto, Helvetica, 'sans-serif';
+}
+
+/* == Layout ==== */
+
+/* == Modules ==== */
+.filterLink {
+	margin-left: 4px;
+}
+
+/* == State == */
+.is-todo-complete {
+	text-decoration: line-through;
+}

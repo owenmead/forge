@@ -5,47 +5,34 @@ import Redux from 'redux';
 
 import { store } from './todoStore/store.js';
 
-const FilterLink = ({
-  filter,
-  currentFilter,
-  children
-}) => {
-  if (currentFilter === filter) {
-    return <span>{children}</span>
+const FilterLink = ( {filter, currentFilter, children} ) => {
+  var linkClick = function(e) {
+    e.preventDefault();
+    store.dispatch({
+      type: 'SET_VISIBILITY_FILTER',
+      filter
+    });
   }
+
+  var link;
+  if (currentFilter === filter) {
+    link = children;
+  } else {
+    link = <a href='#' onClick={linkClick}>{children}</a>
+  }
+
   return (
-    <a href='#'
-      onClick={e => {
-        e.preventDefault();
-        store.dispatch({
-          type: 'SET_VISIBILITY_FILTER',
-          filter
-        });
-      }}
-    >
-      {children}
-    </a>
+    <span className="filterLink">{link}</span>
   )
 }
 
-const Todo = ({
-  onClick,
-  completed,
-  text
-}) => (
-  <li
-   onClick={onClick}
-   style={{
-     textDecoration: completed?'line-through':'none'
-   }}>
+const Todo = ( {onClick, completed, text} ) => (
+  <li onClick={onClick} className={ completed ? 'is-todo-complete' : '' }>
     {text}
   </li>
 );
 
-const TodoList = ({
-  todos,
-  onTodoClick
-}) => (
+const TodoList = ({ todos, onTodoClick }) => (
   <ul>
     {todos.map(todo =>
       <Todo
@@ -79,38 +66,31 @@ class TodoApp extends Component {
       visibilityFilter
     } = this.props;
 
-    const visibleTodos = getVisibleTodos(
-      todos,
-      visibilityFilter);
+    const visibleTodos = getVisibleTodos(todos, visibilityFilter);
+
+    var todoClick = id=>store.dispatch({type: 'TOGGLE_TODO', id});
+    var addBtnClick = () => {
+      if (this.formInput.value === '') {
+        return;
+      }
+      store.dispatch({
+        type: 'ADD_TODO',
+        text: this.formInput.value,
+        id: nextTodoId++
+      });
+      this.formInput.value = '';
+      this.formInput.focus();
+    };
+
     return (
       <div>
-        <input ref={node => {
-          this.input = node;
-        }} />
-        <button onClick={() => {
-          store.dispatch({
-            type: 'ADD_TODO',
-            text: this.input.value,
-            id: nextTodoId++
-          });
-          this.input.value = '';
-          this.input.focus();
-        }}>Add Todo</button>
-        <TodoList
-          todos={visibleTodos}
-          onTodoClick={id =>
-            store.dispatch({
-              type: 'TOGGLE_TODO',
-              id
-            })
-          } />
+        <input ref={c=>this.formInput=c} />
+        <button onClick={addBtnClick}>Add Todo</button>
+        <TodoList todos={visibleTodos} onTodoClick={todoClick} />
         <p>
           Show:
-          {' '}
           <FilterLink filter='SHOW_ALL' currentFilter={visibilityFilter}>All</FilterLink>
-          {' '}
           <FilterLink filter='SHOW_ACTIVE' currentFilter={visibilityFilter}>Active</FilterLink>
-          {' '}
           <FilterLink filter='SHOW_COMPLETED' currentFilter={visibilityFilter}>Completed</FilterLink>
         </p>
       </div>
