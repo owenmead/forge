@@ -6,10 +6,10 @@ import { TodoApp } from './todos/TodoApp.js'
 
 const render = () => {
   ReactDOM.render(
-    <TodoApp
-      {...store.getState()}
-    />,
-    document.getElementById('root')
+      <TodoApp
+          {...store.getState()}
+      />,
+      document.getElementById('root')
   );
 };
 

@@ -1,9 +1,12 @@
 import React from 'react';
 
 export const Todo = ( {onClick, completed, text} ) => (
-  <li onClick={onClick} className={ completed ? 'is-todo-complete' : '' }>
-    {text}
-  </li>
+    <li
+        className={completed ? 'is-todo-complete' : ''}
+        onClick={onClick}
+    >
+        {text}
+    </li>
 );
 
 export default Todo;

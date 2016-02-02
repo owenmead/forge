@@ -47,23 +47,30 @@ export class TodoApp extends Component {
     ];
 
     return (
-      <div>
-        <input ref={c=>this.formInput=c} />
-        <button className="addTodoBtn" onClick={addBtnClick}>Add Todo</button>
-        <TodoList todos={visibleTodos} onTodoClick={todoClick} />
-        <p>
-          Show:
-          {links.map(link=>
-            <ActiveLink
-              key={link.filter}
-              isActive={visibilityFilter !== link.filter}
-              onClick={() => store.dispatch({
-                type: 'SET_VISIBILITY_FILTER',
-                filter: link.filter
-              })}>{link.name}</ActiveLink>
-          )}
-        </p>
-      </div>
+        <div>
+            <input ref={c=>this.formInput=c} />
+            <button
+                className="addTodoBtn"
+                onClick={addBtnClick}
+            >Add Todo</button>
+            <TodoList
+                onTodoClick={todoClick}
+                todos={visibleTodos}
+            />
+            <p>
+            Show:
+            {links.map(link=>
+                <ActiveLink
+                    isActive={visibilityFilter !== link.filter}
+                    key={link.filter}
+                    onClick={() => store.dispatch({
+                      type: 'SET_VISIBILITY_FILTER',
+                      filter: link.filter
+                    })}
+                >{link.name}</ActiveLink>
+            )}
+            </p>
+        </div>
     )
   }
 }

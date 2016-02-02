@@ -7,9 +7,14 @@ export const ActiveLink = ( {isActive, onClick, children} ) => {
   }
 
   return (
-    <span className="filterLink">
-      {isActive ? <a href='#' onClick={linkClick}>{children}</a> : children}
-    </span>
+      <span className="filterLink">
+        {isActive ?
+            <a
+                href="#"
+                onClick={linkClick}
+            >{children}</a>
+        : children}
+      </span>
   )
 }
 
