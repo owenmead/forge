@@ -49,7 +49,7 @@ export class TodoApp extends Component {
     return (
       <div>
         <input ref={c=>this.formInput=c} />
-        <button onClick={addBtnClick}>Add Todo</button>
+        <button className="addTodoBtn" onClick={addBtnClick}>Add Todo</button>
         <TodoList todos={visibleTodos} onTodoClick={todoClick} />
         <p>
           Show:
