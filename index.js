@@ -5,27 +5,6 @@ import Redux from 'redux';
 
 import { store } from './todoStore/store.js';
 
-const FilterLink = ( {filter, currentFilter, children} ) => {
-  var linkClick = function(e) {
-    e.preventDefault();
-    store.dispatch({
-      type: 'SET_VISIBILITY_FILTER',
-      filter
-    });
-  }
-
-  var link;
-  if (currentFilter === filter) {
-    link = children;
-  } else {
-    link = <a href='#' onClick={linkClick}>{children}</a>
-  }
-
-  return (
-    <span className="filterLink">{link}</span>
-  )
-}
-
 const Todo = ( {onClick, completed, text} ) => (
   <li onClick={onClick} className={ completed ? 'is-todo-complete' : '' }>
     {text}
@@ -82,6 +61,12 @@ class TodoApp extends Component {
       this.formInput.focus();
     };
 
+    var links = [
+      {name: 'All', filter: 'SHOW_ALL'},
+      {name: 'Active', filter: 'SHOW_ACTIVE'},
+      {name: 'Completed', filter: 'SHOW_COMPLETED'}
+    ];
+
     return (
       <div>
         <input ref={c=>this.formInput=c} />
@@ -89,13 +74,31 @@ class TodoApp extends Component {
         <TodoList todos={visibleTodos} onTodoClick={todoClick} />
         <p>
           Show:
-          <FilterLink filter='SHOW_ALL' currentFilter={visibilityFilter}>All</FilterLink>
-          <FilterLink filter='SHOW_ACTIVE' currentFilter={visibilityFilter}>Active</FilterLink>
-          <FilterLink filter='SHOW_COMPLETED' currentFilter={visibilityFilter}>Completed</FilterLink>
+          {links.map(link=>
+            <ActiveLink
+              isActive={visibilityFilter !== link.filter}
+              onClick={() => store.dispatch({
+                type: 'SET_VISIBILITY_FILTER',
+                filter: link.filter
+              })}>{link.name}</ActiveLink>
+          )}
         </p>
       </div>
     )
   }
+}
+
+const ActiveLink = ( {isActive, onClick, children} ) => {
+  var linkClick = function(e) {
+    e.preventDefault();
+    onClick();
+  }
+
+  return (
+    <span className="filterLink">
+      {isActive ? <a href='#' onClick={linkClick}>{children}</a> : children}
+    </span>
+  )
 }
 
 const render = () => {
