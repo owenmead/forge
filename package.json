@@ -3,8 +3,21 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "start": "webpack-dev-server --history-api-fallback --hot --inline --progress --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Owen Mead-Robins <owenmead@gmail.com> (http://www.owenmead.com)",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7"
+  },
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "webpack": "^1.12.12",
+    "webpack-dev-server": "^1.14.1"
+  }
 }
